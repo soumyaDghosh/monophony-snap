@@ -29,8 +29,8 @@ parts:
     python-packages:
       - requests
       - PyGObject
+      - ordered-set
       - ytmusicapi
-      - ordered-sets
       - yt-dlp
       - lxml
       - MarkupSafe
