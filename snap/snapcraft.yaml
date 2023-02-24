@@ -81,9 +81,8 @@ parts:
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
       - yt-dlp
-    override-pull: |
-      craftctl default
-      sed 's|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o /usr/bin/monophony|nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o /usr/bin/monophony|' -i source/Makefile
+    build-environment:
+      - PATH: ${CRAFT_STAGE}/bin:${PATH}    
 
 apps:
   monophony:
