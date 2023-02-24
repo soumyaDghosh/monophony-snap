@@ -17,7 +17,23 @@ environment:
   PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
 
 parts:
+  nuitka:
+    plugin: python
+    source: https://github.com/Nuitka/Nuitka.git
+    source-tag: 1.4.8
+    source-type: git
+    build-environment:
+      # WORKAROUND: The python plugin is broken with gnome extension
+      - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
+      - PYTHONPATH: ""
+    python-packages:
+      - requests
+      - PyGObject
+      - ytmusicapi
+      - ordered-sets
+
   ffmpeg:
+    after: [nuitka]
     # WORKAROUND:
     # Build from source because the ffmpeg package installs libraries as dependencies
     # that conflict with the Gnome extension
@@ -51,6 +67,7 @@ parts:
     # See 'snapcraft plugins'
     after:
       - ffmpeg
+      - nuitka
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
     source-tag: v$SNAPCRAFT_PROJECT_VERSION
@@ -60,43 +77,14 @@ parts:
       - libgstreamer1.0-dev
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
-      - expat
-      - gettext
-      - zlib1g
-      - zlib1g-dev
-      - libexpat1-dev
-      - libexpat1
-      - scons
-      - libffi7
-      - build-essential
-      - python3.11-dev
-      - python3-pip
-      - xml-core
-      - python3-lxml
     stage-packages:
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
-      - expat
-      - gettext
-      - zlib1g
-      - zlib1g-dev
-      - libexpat1-dev
-      - libexpat1
-      - scons
-      - libffi7
-    build-environment:
-      - PATH: ${CRAFT_STAGE}/bin:${PATH}
-      - PYTHONPATH: ""
+      - yt-dlp
     override-pull: |
       craftctl default
-      pip install Nuitka
-      pip install requests
-      pip install yt-dlp
-      pip install PyGObject
-      pip install mpris-server
-      pip install ordered-set
-      pip install ytmusicapi
-      pip install
+      sed 's|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o /usr/bin/monophony|nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o /usr/bin/monophony|' -i source/Makefile
+
 apps:
   monophony:
     command: usr/bin/monophony
