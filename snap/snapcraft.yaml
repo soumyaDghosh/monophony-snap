@@ -31,6 +31,9 @@ parts:
       - PyGObject
       - ytmusicapi
       - ordered-sets
+      - yt-dlp
+      - lxml
+      - MarkupSafe
 
   ffmpeg:
     after: [nuitka]
@@ -77,10 +80,11 @@ parts:
       - libgstreamer1.0-dev
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
+      - xml-core
     stage-packages:
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
-      - yt-dlp
+      - xml-core
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}    
 
