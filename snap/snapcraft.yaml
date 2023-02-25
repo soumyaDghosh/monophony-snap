@@ -83,6 +83,9 @@ parts:
       - xml-core
       - libexpat1-dev
       - libexpat1
+      - execstack
+      - intltool
+      - gettext
     stage-packages:
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
