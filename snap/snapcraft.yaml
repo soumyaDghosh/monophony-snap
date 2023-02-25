@@ -91,7 +91,7 @@ parts:
       - libexpat1
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}    
-      - LDFLAGS: "-Wl,--copy-dt-needed-entries, -lz"
+      - LDFLAGS: "-lz"
 
 apps:
   monophony:
