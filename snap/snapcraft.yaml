@@ -81,10 +81,14 @@ parts:
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
       - xml-core
+      - libexpat1-dev
+      - libexpat1
     stage-packages:
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
       - xml-core
+      - libexpat1-dev
+      - libexpat1
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}    
 
