@@ -114,7 +114,6 @@ parts:
       - libctf0 
       - liberror-perl 
       - libgcc-12-dev 
-      - libgprofng0 
       - libitm1 
       - libjs-jquery 
       - libjs-sphinxdoc
