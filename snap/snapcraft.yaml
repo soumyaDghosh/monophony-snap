@@ -95,6 +95,41 @@ parts:
       - patchelf
       - scons
       - zlib1g-dev
+      - binutils
+      - binutils-common 
+      - binutils-x86-64-linux-gnu 
+      - build-essential 
+      - javascript-common 
+      - libalgorithm-diff-perl 
+      - libalgorithm-diff-xs-perl 
+      - libalgorithm-merge-perl  
+      - libasan8 
+      - libbinutils 
+      - libc-dev-bin 
+      - libc-devtools 
+      - libc6-dev 
+      - libcc1-0
+      - libcrypt-dev 
+      - libctf-nobfd0 
+      - libctf0 
+      - liberror-perl 
+      - libgcc-12-dev 
+      - libgprofng0 
+      - libitm1 
+      - libjs-jquery 
+      - libjs-sphinxdoc
+      - libjs-underscore 
+      - liblsan0 
+      - libnsl-dev 
+      - libquadmath0 
+      - libstdc++-12-dev 
+      - libtirpc-dev 
+      - libtsan2 
+      - libubsan1 
+      - linux-libc-dev  
+      - lto-disabled-list 
+      - python3-distutils
+      - rpcsvc-proto
     stage-packages:
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
