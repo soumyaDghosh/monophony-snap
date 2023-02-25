@@ -36,8 +36,6 @@ parts:
       - MarkupSafe
       - appdirs
       - Jinja2
-      - scons
-      - zlib1g-dev
 
   ffmpeg:
     after: [nuitka]
@@ -95,7 +93,8 @@ parts:
       - chrpath
       - clang
       - patchelf
-      - 
+      - scons
+      - zlib1g-dev
     stage-packages:
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
