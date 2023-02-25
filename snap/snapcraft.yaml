@@ -34,6 +34,10 @@ parts:
       - yt-dlp
       - lxml
       - MarkupSafe
+      - appdirs
+      - Jinja2
+      - scons
+      - zlib1g-dev
 
   ffmpeg:
     after: [nuitka]
@@ -86,6 +90,12 @@ parts:
       - execstack
       - intltool
       - gettext
+      - base-files
+      - ccache
+      - chrpath
+      - clang
+      - patchelf
+      - 
     stage-packages:
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
