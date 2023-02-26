@@ -17,28 +17,28 @@ environment:
   PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
 
 parts:
-  nuitka:
-    plugin: python
-    source: https://github.com/Nuitka/Nuitka.git
-    source-tag: 1.4.8
-    source-type: git
-    build-environment:
-      # WORKAROUND: The python plugin is broken with gnome extension
-      - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
-      - PYTHONPATH: ""
-    python-packages:
-      - requests
-      - PyGObject
-      - ordered-set
-      - ytmusicapi
-      - yt-dlp
-      - lxml
-      - MarkupSafe
-      - appdirs
-      - Jinja2
+  #nuitka:
+   # plugin: python
+    #source: https://github.com/Nuitka/Nuitka.git
+    #source-tag: 1.4.8
+    #source-type: git
+    #build-environment:
+     # WORKAROUND: The python plugin is broken with gnome extension
+    #  - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
+     # - PYTHONPATH: ""
+    #python-packages:
+     # - requests
+     # - PyGObject
+     # - ordered-set
+     # - ytmusicapi
+     # - yt-dlp
+     # - lxml
+     # - MarkupSafe
+     # - appdirs
+     # - Jinja2
 
   ffmpeg:
-    after: [nuitka]
+    #after: [nuitka]
     # WORKAROUND:
     # Build from source because the ffmpeg package installs libraries as dependencies
     # that conflict with the Gnome extension
@@ -72,7 +72,7 @@ parts:
     # See 'snapcraft plugins'
     after:
       - ffmpeg
-      - nuitka
+     # - nuitka
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
     source-tag: v$SNAPCRAFT_PROJECT_VERSION
@@ -129,6 +129,14 @@ parts:
       - lto-disabled-list 
       - python3-distutils
       - rpcsvc-proto
+      - python3-dev
+      - python3-ordered-set
+      - python3-gi
+      - python3-jinja2
+      - yt-dlp
+      - python3-requests
+      - python3-pip
+      - nuitka
     stage-packages:
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
@@ -137,7 +145,10 @@ parts:
       - libexpat1
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}    
-      - LDFLAGS: "-lz"
+      
+    override-pull: |
+      craftctl default
+      pip install ytmusicapi
 
 apps:
   monophony:
