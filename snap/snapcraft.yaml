@@ -25,6 +25,12 @@ parts:
       # WORKAROUND: The python plugin is broken with gnome extension
       - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
       - PYTHONPATH: ""
+    build-packages:
+      - libexpat1
+      - libexpat1-dev
+    stage-packages:
+      - libexpat1
+      - libexpat1-dev
     python-packages:
       - requests
       - PyGObject
