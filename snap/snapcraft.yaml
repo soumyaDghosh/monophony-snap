@@ -96,8 +96,8 @@ parts:
       - xml-core
       - libexpat1-dev
       - libexpat1
-    build-environment:
-      - PATH: ${CRAFT_STAGE}/bin:${PATH}
+    #build-environment:
+    #  - PATH: ${CRAFT_STAGE}/bin:${PATH}
 
 apps:
   monophony:
