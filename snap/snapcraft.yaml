@@ -11,9 +11,9 @@ grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 compression: lzo
 
-environment:
+#environment:
   # WORKAROUND: Add python modules in Snap to search path
-  PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
+  #PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
 
 parts:
   nuitka:
@@ -96,8 +96,8 @@ parts:
       - xml-core
       - libexpat1-dev
       - libexpat1
-    #build-environment:
-    #  - PATH: ${CRAFT_STAGE}/bin:${PATH}
+    build-environment:
+      - PATH: ${CRAFT_STAGE}/bin:${PATH}
 
 apps:
   monophony:
