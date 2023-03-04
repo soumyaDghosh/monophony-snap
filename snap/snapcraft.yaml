@@ -72,11 +72,20 @@ parts:
       - libmp3lame0
     stage:
       - -usr/include
-
+  expat:
+    after: 
+      - ffmpeg
+      - nuitka
+    plugin: autotools
+    source: https://github.com/libexpat/libexpat.git
+    source-tag: R_2_5_0
+    autotools-configure-parameters:
+      - --prefix=/usr
   monophony:
     # See 'snapcraft plugins'
     after:
       - ffmpeg
+      - expat
       - nuitka
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
