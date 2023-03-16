@@ -101,6 +101,7 @@ parts:
       - gstreamer1.0-plugins-good
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
+      - LDFLAGS: "-lz -lexpat"
 
 apps:
   monophony:
