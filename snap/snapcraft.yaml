@@ -108,7 +108,7 @@ parts:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
       - LDFLAGS: "-lz -lexpat"
     override-pull: |
-      sed -e 's|python3 -m nuitka|nuitka3|' -i source/Makefile
+      sed -e 's|python3 -m nuitka|nuitka3|' -i Makefile
 
 
 apps:
