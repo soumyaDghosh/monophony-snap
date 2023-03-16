@@ -88,6 +88,7 @@ parts:
     build-packages:
       - ffmpeg
       - nuitka
+      - yt-dlp
       - python3-dev
       - libpython3.10-dev
       - libexpat1-dev
@@ -99,6 +100,7 @@ parts:
       - nuitka
       - libpython3.10-dev
       - ffmpeg
+      - yt-dlp
       - libexpat1
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
