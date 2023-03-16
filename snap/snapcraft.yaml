@@ -22,86 +22,92 @@ package-repositories:
   #PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
 
 parts:
-  nuitka:
-    plugin: python
-    source: https://github.com/Nuitka/Nuitka.git
-    source-tag: 1.4.8
-    source-type: git
-    build-environment:
-      # WORKAROUND: The python plugin is broken with gnome extension
-      - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
-      - PYTHONPATH: ""
-    build-packages:
-      - libexpat1
-      - libexpat1-dev
-    stage-packages:
-      - libexpat1
-      - libexpat1-dev
-    python-packages:
-      - requests
-      - PyGObject
-      - ordered-set
-      - ytmusicapi
-      - yt-dlp
-      - lxml
-      - MarkupSafe
-      - appdirs
-      - Jinja2
+#  nuitka:
+#    plugin: python
+#    source: https://github.com/Nuitka/Nuitka.git
+#    source-tag: 1.4.8
+#    source-type: git
+#    build-environment:
+#      # WORKAROUND: The python plugin is broken with gnome extension
+#      - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
+#      - PYTHONPATH: ""
+#    build-packages:
+#      - libexpat1
+#      - libexpat1-dev
+#    stage-packages:
+#      - libexpat1
+#     - libexpat1-dev
+#    python-packages:
+#      - requests
+#     - PyGObject
+#      - ordered-set
+#      - ytmusicapi
+#      - yt-dlp
+#      - lxml
+#      - MarkupSafe
+#      - appdirs
+#      - Jinja2#
 
-  ffmpeg:
-    after: [nuitka]
-    # WORKAROUND:
-    # Build from source because the ffmpeg package installs libraries as dependencies
-    # that conflict with the Gnome extension
-    plugin: autotools
-    source: https://ffmpeg.org/releases/ffmpeg-5.1.2.tar.xz
-    source-checksum: sha256/619e706d662c8420859832ddc259cd4d4096a48a2ce1eefd052db9e440eef3dc
-    autotools-configure-parameters:
-      # WORKAROUND: Install to /usr instead of /usr/local because it's not in search paths
-      - --prefix=/usr
-      - --disable-debug
-      - --disable-doc
-      - --disable-static
-      - --enable-gpl
-      - --enable-shared
-      - --disable-ffplay
-      - --disable-devices
-      - --enable-gnutls
-      - --enable-libmp3lame
-      - --enable-libvorbis
-    build-packages:
-      - nasm
-      - libgnutls28-dev
-      - libmp3lame-dev
-      - libvorbis-dev
-    stage-packages:
-      - libmp3lame0
-    stage:
-      - -usr/include
+#  ffmpeg:
+#    after: [nuitka]
+#    # WORKAROUND:
+#    # Build from source because the ffmpeg package installs libraries as dependencies
+#    # that conflict with the Gnome extension
+#    plugin: autotools
+#    source: https://ffmpeg.org/releases/ffmpeg-5.1.2.tar.xz
+#    source-checksum: sha256/619e706d662c8420859832ddc259cd4d4096a48a2ce1eefd052db9e440eef3dc
+#    autotools-configure-parameters:
+#      # WORKAROUND: Install to /usr instead of /usr/local because it's not in search paths
+#      - --prefix=/usr
+#      - --disable-debug
+#      - --disable-doc
+#      - --disable-static
+#      - --enable-gpl
+#      - --enable-shared
+#      - --disable-ffplay
+#      - --disable-devices
+#      - --enable-gnutls
+#      - --enable-libmp3lame
+#      - --enable-libvorbis
+#    build-packages:
+#      - nasm
+#      - libgnutls28-dev
+#      - libmp3lame-dev
+#      - libvorbis-dev
+#    stage-packages:
+#      - libmp3lame0
+#    stage:
+#      - -usr/include
   monophony:
     # See 'snapcraft plugins'
-    after:
-      - ffmpeg
-      - nuitka
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
     source-tag: v$SNAPCRAFT_PROJECT_VERSION
     source-subdir: source
     source-type: git
     build-packages:
-      - libadwaita-1-dev
+      - ffmpeg
+      - nuitka
+      - python3-dev
+      - libpython3.10-dev
       - libexpat1-dev
       - libgstreamer1.0-dev
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
     stage-packages:
-      - libadwaita-1-0
+      - python3-dev
+      - nuitka
+      - libpython3.10-dev
+      - ffmpeg
       - libexpat1
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
       - LDFLAGS: "-lz -lexpat"
+    override-pull: |
+      sed -e 's|python3 -m nuitka|nuitka3|' -i source/Makefile
+
 
 apps:
   monophony:
