@@ -95,8 +95,6 @@ parts:
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
       - LDFLAGS: "-O2 -pipe -I$SNAPCRAFT_STAGE/lib/x86_64-linux-gnu/libexpat.so.1"
-    override-pull: |
-      sed -e 's|python3 -m nuitka|nuitka3|' -i Makefile
 
 
 apps:
