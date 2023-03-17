@@ -40,7 +40,7 @@ parts:
       - lxml
       - MarkupSafe
       - appdirs
-      - Jinja2#
+      - Jinja2
 
   ffmpeg:
     after: [nuitka]
