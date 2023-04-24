@@ -25,6 +25,7 @@ parts:
   libexpat:
     source: https://github.com/libexpat/libexpat.git
     source-tag: R_2_5_0
+    source-subdir: expat
     plugin: cmake
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
