@@ -25,7 +25,9 @@ parts:
   libexpat:
     source: https://github.com/libexpat/libexpat.git
     source-tag: R_2_5_0
-    plugin: autotools
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
     override-prime:
       echo 'Skip Prime'
   nuitka:
