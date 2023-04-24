@@ -21,7 +21,7 @@ parts:
   cpython:
     source: https://github.com/python/cpython.git
     source-tag: v3.12.0a7
-    plugin: make
+    plugin: autotools
   #libexpat:
   #  source: https://github.com/libexpat/libexpat.git
   #  source-tag: R_2_5_0
