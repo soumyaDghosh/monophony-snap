@@ -22,6 +22,9 @@ parts:
     source: https://github.com/python/cpython.git
     source-tag: v3.12.0a7
     plugin: autotools
+    autotools-configure-parameters:
+      # WORKAROUND: Install to /usr instead of /usr/local because it's not in search paths
+      - --prefix=/usr    
   #libexpat:
   #  source: https://github.com/libexpat/libexpat.git
   #  source-tag: R_2_5_0
