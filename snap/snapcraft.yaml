@@ -81,6 +81,7 @@ parts:
     stage:
       - -usr/include
   monophony:
+    after: [ffmpeg, nuitka, libexpat]
     # See 'snapcraft plugins'
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
