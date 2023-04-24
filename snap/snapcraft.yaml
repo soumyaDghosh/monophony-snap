@@ -25,8 +25,8 @@ parts:
     plugin: cmake
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
-    override-prime:
-      echo 'Skip Prime'
+    prime:
+      - usr/lib/*/libexpat.so*
   nuitka:
     plugin: python
     source: https://github.com/Nuitka/Nuitka.git
