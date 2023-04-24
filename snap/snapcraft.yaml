@@ -18,15 +18,19 @@ compression: lzo
   #PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
 
 parts:
-  libexpat:
-    source: https://github.com/libexpat/libexpat.git
-    source-tag: R_2_5_0
-    source-subdir: expat
-    plugin: cmake
-    cmake-parameters:
-      - -DCMAKE_INSTALL_PREFIX=/usr
-    prime:
-      - usr/lib/*/libexpat.so*
+  cpython:
+    source: https://github.com/python/cpython.git
+    source-tag: v3.12.0a7
+    plugin: make
+  #libexpat:
+  #  source: https://github.com/libexpat/libexpat.git
+  #  source-tag: R_2_5_0
+  #  source-subdir: expat
+  #  plugin: cmake
+  #  cmake-parameters:
+  #    - -DCMAKE_INSTALL_PREFIX=/usr
+  #  prime:
+  #    - usr/lib/*/libexpat.so*
   nuitka:
     plugin: python
     source: https://github.com/Nuitka/Nuitka.git
