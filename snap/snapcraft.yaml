@@ -26,6 +26,8 @@ parts:
     source: https://github.com/libexpat/libexpat.git
     source-tag: R_2_5_0
     plugin: autotools
+    override-prime:
+      echo 'Skip Prime'
   nuitka:
     plugin: python
     source: https://github.com/Nuitka/Nuitka.git
@@ -45,6 +47,8 @@ parts:
       - MarkupSafe
       - appdirs
       - Jinja2
+    override-prime:
+      echo 'Skip Prime'
 
   ffmpeg:
     after: [nuitka]
