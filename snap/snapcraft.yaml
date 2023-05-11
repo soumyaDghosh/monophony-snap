@@ -11,6 +11,18 @@ environment:
   PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
 
 parts:
+  zlib:
+    source: https://github.com/madler/zlib.git
+    source-tag: 'v1.2.13'
+    plugin: autotools
+    autotools-configure-parameters:
+      - --prefix=/usr
+  libexpat:
+    source: https://github.com/libexpat/libexpat
+    source-tag: R_2_5_0
+    plugin: autotools
+    autotools-configure-parameters:
+      - --prefix=/usr
   nuitka:
     plugin: python
     source: https://github.com/Nuitka/Nuitka.git
@@ -61,7 +73,7 @@ parts:
     stage:
       - -usr/include
   monophony:
-    after: [ffmpeg, nuitka, libexpat]
+    after: [ffmpeg, nuitka]
     # See 'snapcraft plugins'
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
@@ -77,7 +89,7 @@ parts:
       - gstreamer1.0-plugins-good
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
-      - LDFLAGS: -L/$CRAFT_STAGE/usr/lib/x86_64-linux-gnu -lz -lexpat
+      - LDFLAGS: -L/$CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET -lz -lexpat
     parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
 
 
