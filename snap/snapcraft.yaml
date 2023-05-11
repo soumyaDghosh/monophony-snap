@@ -18,7 +18,7 @@ parts:
     autotools-configure-parameters:
       - --prefix=/usr
   libexpat:
-    source: https://github.com/libexpat/libexpat
+    source: https://github.com/libexpat/libexpat.git
     source-tag: R_2_5_0
     plugin: autotools
     autotools-configure-parameters:
@@ -73,7 +73,7 @@ parts:
     stage:
       - -usr/include
   monophony:
-    after: [ffmpeg, nuitka]
+    after: [ffmpeg, nuitka, zlib, libexpat]
     # See 'snapcraft plugins'
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
