@@ -20,6 +20,7 @@ parts:
   libexpat:
     source: https://github.com/libexpat/libexpat.git
     source-tag: R_2_5_0
+    source-subdir: 'expat'
     plugin: autotools
     autotools-configure-parameters:
       - --prefix=/usr
