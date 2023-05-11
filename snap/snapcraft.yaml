@@ -6,34 +6,11 @@ icon: icon.svg
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 compression: lzo
-
-#package-repositories:
-#  - type: apt
-#    components: [main, multiverse, #restricted, universe]
-#    suites: [kinetic, kinetic-backports, #kinetic-security, kinetic-updates]
-#    key-id: #F6ECB3762474EDA9D21B7022871920D1991BC93C
-#    url: #http://security.ubuntu.com/ubuntu
-#environment:
+environment:
   # WORKAROUND: Add python modules in Snap to search path
-  #PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
+  PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
 
 parts:
-  cpython:
-    source: https://github.com/python/cpython.git
-    source-tag: v3.12.0a7
-    plugin: autotools
-    autotools-configure-parameters:
-      # WORKAROUND: Install to /usr instead of /usr/local because it's not in search paths
-      - --prefix=/usr    
-  #libexpat:
-  #  source: https://github.com/libexpat/libexpat.git
-  #  source-tag: R_2_5_0
-  #  source-subdir: expat
-  #  plugin: cmake
-  #  cmake-parameters:
-  #    - -DCMAKE_INSTALL_PREFIX=/usr
-  #  prime:
-  #    - usr/lib/*/libexpat.so*
   nuitka:
     plugin: python
     source: https://github.com/Nuitka/Nuitka.git
@@ -100,7 +77,7 @@ parts:
       - gstreamer1.0-plugins-good
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
-      - LDFLAGS: "$LDFLAGS -L/$CRAFT_STAGE/usr/lib/x86_64-linux-gnu -lz -lexpat"
+      - LDFLAGS: -L/$CRAFT_STAGE/usr/lib/x86_64-linux-gnu -lz -lexpat
     parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
 
 
