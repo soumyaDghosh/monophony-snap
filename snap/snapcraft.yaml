@@ -90,7 +90,7 @@ parts:
       - gstreamer1.0-plugins-good
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
-      - LDFLAGS: -L/$CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET -lz -lexpat
+      - LDFLAGS: -L/$CRAFT_STAGE/usr/include -lz -lexpat
     parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
 
 
