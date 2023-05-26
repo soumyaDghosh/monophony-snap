@@ -50,7 +50,6 @@ parts:
       - zlib1g
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
-      - LDFLAGS: -L/$CRAFT_STAGE/usr/include -lz -lexpat
     override-pull: |
       craftctl default
       sed -i 's|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin --static-libpython=no|' source/Makefile
