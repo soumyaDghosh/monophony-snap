@@ -29,6 +29,8 @@ parts:
       - libpython3.10-dev
       - libexpat1-dev
       - zlib1g
+      - pypy-setuptools
+      - python-setuptools
     #stage-packages:
      # - python3-gst-1.0
     build-environment:
