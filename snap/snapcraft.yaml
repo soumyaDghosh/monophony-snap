@@ -65,7 +65,7 @@ parts:
     override-prime: |
       craftctl default
       cd $CRAFT_PRIME
-      rm -rf usr/lib/*/libgir* usr/lib/python* usr/share/doc usr/share/pkgconfig usr/share/man
+      rm -rf usr/lib/*/libgir* usr/lib/python* usr/share/doc usr/share/pkgconfig usr/share/man usr/lib/$CRAFT_ARCH_TRIPLET
 
 apps:
   monophony:
