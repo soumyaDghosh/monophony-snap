@@ -77,6 +77,7 @@ parts:
     source-type: git
     build-packages:
       - libexpat1-dev
+      - python3-dev
       - zlib1g
       - libgstreamer1.0-dev
       - gstreamer1.0-libav
