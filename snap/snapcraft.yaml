@@ -37,38 +37,8 @@ parts:
       - MarkupSafe
       - appdirs
       - Jinja2
-  ffmpeg:
-    after: [nuitka]
-    # WORKAROUND:
-    # Build from source because the ffmpeg package installs libraries as dependencies
-    # that conflict with the Gnome extension
-    plugin: autotools
-    source: https://ffmpeg.org/releases/ffmpeg-5.1.2.tar.xz
-    source-checksum: sha256/619e706d662c8420859832ddc259cd4d4096a48a2ce1eefd052db9e440eef3dc
-    autotools-configure-parameters:
-      # WORKAROUND: Install to /usr instead of /usr/local because it's not in search paths
-      - --prefix=/usr
-      - --disable-debug
-      - --disable-doc
-      - --disable-static
-      - --enable-gpl
-      - --enable-shared
-      - --disable-ffplay
-      - --disable-devices
-      - --enable-gnutls
-      - --enable-libmp3lame
-      - --enable-libvorbis
-    build-packages:
-      - nasm
-      - libgnutls28-dev
-      - libmp3lame-dev
-      - libvorbis-dev
-    stage-packages:
-      - libmp3lame0
-    stage:
-      - -usr/include
   monophony:
-    after: [ffmpeg, nuitka, zlib, libexpat]
+    after: [ nuitka ]
     # See 'snapcraft plugins'
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
@@ -77,17 +47,13 @@ parts:
     source-type: git
     build-packages:
       - libexpat1-dev
-      - python3-dev
       - zlib1g
-      - libgstreamer1.0-dev
-      - gstreamer1.0-libav
-      - gstreamer1.0-plugins-good
-    stage-packages:
-      - gstreamer1.0-libav
-      - gstreamer1.0-plugins-good
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
       - LDFLAGS: -L/$CRAFT_STAGE/usr/include -lz -lexpat
+    override-pull: |
+      craftctl default
+      sed -i "s/python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin &/python3 -m nuitka bin/monophony.py --static-libpython=no --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin &/" Makefile
     parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
 
 
