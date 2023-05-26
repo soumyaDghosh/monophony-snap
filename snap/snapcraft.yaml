@@ -42,7 +42,7 @@ parts:
       pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages yt-dlp==2023.3.4
       pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages ytmusicapi==0.25.2
       pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages requests==2.28.2
-      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages mpris_server==0.4.2
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages mpris_server
     override-build: |
       pip install nuitka
       craftctl default
