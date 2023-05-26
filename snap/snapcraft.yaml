@@ -18,28 +18,7 @@ package-repositories:
     url: http://security.ubuntu.com/ubuntu
     
 parts:
-  nuitka:
-    plugin: python
-    source: https://github.com/Nuitka/Nuitka.git
-    source-tag: 1.4.8
-    source-type: git
-    build-environment:
-      # WORKAROUND: The python plugin is broken with gnome extension
-      - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
-      - PYTHONPATH: ""
-    python-packages:
-      - requests
-      - PyGObject
-      - ordered-set
-      - ytmusicapi
-      - yt-dlp
-      - lxml
-      - MarkupSafe
-      - appdirs
-      - Jinja2
-      - mpris-server
   monophony:
-    after: [ nuitka ]
     # See 'snapcraft plugins'
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
@@ -50,14 +29,21 @@ parts:
       - libpython3.10-dev
       - libexpat1-dev
       - zlib1g
-    stage-packages:
-      - python3-gst-1.0
+    #stage-packages:
+     # - python3-gst-1.0
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
     override-pull: |
       craftctl default
       sed -i 's|prefix = /usr|prefix=${CRAFT_PART_INSTALL}/usr|' source/Makefile
       sed -i 's|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin --static-libpython=no|' source/Makefile
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages yt-dlp==2023.3.4
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages ytmusicapi==0.25.2
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages requests==2.28.2
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages mpris_server==0.4.2
+    override-build: |
+      pip install nuitka
+      craftctl default
     parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
   cleanup:
     after: [ monophony ]
@@ -72,6 +58,8 @@ apps:
     command: usr/bin/monophony
     desktop: usr/share/applications/io.gitlab.zehkira.Monophony.desktop
     extensions: [gnome]
+    environment:
+      PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
     plugs:
       - home
     slots:
