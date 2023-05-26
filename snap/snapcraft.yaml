@@ -51,7 +51,7 @@ parts:
       - libexpat1-dev
       - zlib1g
     stage-packages:
-      - libgstreamer1.0-0
+      - python3-gst-1.0
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
     override-pull: |
