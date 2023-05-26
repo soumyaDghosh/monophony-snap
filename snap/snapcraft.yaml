@@ -58,11 +58,14 @@ parts:
       craftctl default
       sed -i 's|prefix = /usr|prefix=${CRAFT_PART_INSTALL}/usr|' source/Makefile
       sed -i 's|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin --static-libpython=no|' source/Makefile
+    parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
+  cleanup:
+    after: [ monophony ]
+    plugin: nil
     override-prime: |
       craftctl default
-      rm -rf $CRAFT_PART_INSTALL/usr/lib/*/libgir* $CRAFT_PART_INSTALL/usr/lib/python* $CRAFT_PART_INSTALL/usr/share/doc $CRAFT_PART_INSTALL/usr/share/pkgconfig $CRAFT_PART_INSTALL/usr/share/man
-    parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
-
+      cd $CRAFT_PRIME
+      rm -rf usr/lib/*/libgir* usr/lib/python* usr/share/doc usr/share/pkgconfig usr/share/man
 
 apps:
   monophony:
