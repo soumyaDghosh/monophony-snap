@@ -46,6 +46,7 @@ parts:
     source-subdir: source
     source-type: git
     build-packages:
+      - libpython3.10-dev
       - libexpat1-dev
       - zlib1g
     build-environment:
