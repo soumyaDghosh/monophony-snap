@@ -33,6 +33,7 @@ parts:
      # - python3-gst-1.0
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
+      - PYTHONPATH: /snap/gnome-42-2204-sdk/current/python3/dist-packages:$PYTHONPATH
     override-pull: |
       craftctl default
       sed -i 's|prefix = /usr|prefix=${CRAFT_PART_INSTALL}/usr|' source/Makefile
