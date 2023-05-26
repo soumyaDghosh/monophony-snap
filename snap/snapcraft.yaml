@@ -10,20 +10,14 @@ environment:
   # WORKAROUND: Add python modules in Snap to search path
   PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
 
+package-repositories:
+  - type: apt
+    components: [main, multiverse, restricted, universe]
+    suites: [lunar, lunar-backports, lunar-security, lunar-updates]
+    key-id: F6ECB3762474EDA9D21B7022871920D1991BC93C
+    url: http://security.ubuntu.com/ubuntu
+    
 parts:
-  zlib:
-    source: https://github.com/madler/zlib.git
-    source-tag: 'v1.2.13'
-    plugin: autotools
-    autotools-configure-parameters:
-      - --prefix=/usr
-  libexpat:
-    source: https://github.com/libexpat/libexpat.git
-    source-tag: R_2_5_0
-    source-subdir: 'expat'
-    plugin: autotools
-    autotools-configure-parameters:
-      - --prefix=/usr
   nuitka:
     plugin: python
     source: https://github.com/Nuitka/Nuitka.git
@@ -82,6 +76,8 @@ parts:
     source-subdir: source
     source-type: git
     build-packages:
+      - libexpat
+      - zlib1g
       - libgstreamer1.0-dev
       - gstreamer1.0-libav
       - gstreamer1.0-plugins-good
