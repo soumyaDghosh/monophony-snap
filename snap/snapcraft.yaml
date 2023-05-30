@@ -54,9 +54,9 @@ parts:
     source-subdir: source
     source-type: git
     build-packages:
-      - libpython3.10
       - libpython3.10-dev
     stage-packages:
+      - libpython3.10
       - libgstreamer1.0-0
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
