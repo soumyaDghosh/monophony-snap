@@ -65,6 +65,8 @@ parts:
     source-tag: v$SNAPCRAFT_PROJECT_VERSION
     source-subdir: source
     source-type: git
+    build-packages:
+      - libpython3.10-dev
     stage-packages:
       - libgstreamer1.0-0
     build-environment:
