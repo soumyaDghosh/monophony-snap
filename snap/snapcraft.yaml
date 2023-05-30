@@ -36,17 +36,8 @@ parts:
       # WORKAROUND: The python plugin is broken with gnome extension
       - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
       - PYTHONPATH: ""
-    python-packages:
-      - requests
-      - PyGObject
-      - ordered-set
-      - ytmusicapi
-      - yt-dlp
-      - lxml
-      - MarkupSafe
-      - appdirs
-      - Jinja2
-      - mpris-server
+    override-prime:
+      echo 'Skip'
   monophony:
     after: [ nuitka, libexpat, zlib ]
     # See 'snapcraft plugins'
@@ -66,6 +57,15 @@ parts:
       craftctl default
       sed -i 's|prefix = /usr|prefix=${CRAFT_PART_INSTALL}/usr|' source/Makefile
       sed -i 's|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin --static-libpython=no|' source/Makefile
+      mkdir -p $CRAFT_PART_INSTALL/usr/lib/python3/dist-packages
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages requests
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages ytmusicapi
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages yt-dlp
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages lxml
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages MarkupSafe
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages appdirs
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages Jinja2
+      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages mpris-server
     parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
   cleanup:
     after: [ monophony ]
