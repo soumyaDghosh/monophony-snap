@@ -18,6 +18,25 @@ package-repositories:
     url: http://security.ubuntu.com/ubuntu
     
 parts:
+  libexpat:
+    source: https://github.com/libexpat/libexpat.git
+    source-tag: R_2_5_0
+    source-subdir: expat
+    source-depth: 1
+    plugin: autotools
+    autotools-configure-parameters:
+      - --prefix=/usr
+      - --without-docbook
+    override-prime: |
+      echo 'Skip'
+  zlib:
+    source: https://github.com/madler/zlib.git
+    source-tag: v1.2.13
+    plugin: autotools
+    autotools-configure-parameters:
+      - --prefix=/usr
+    override-prime:
+      echo 'Skip'
   nuitka:
     plugin: python
     source: https://github.com/Nuitka/Nuitka.git
@@ -39,19 +58,15 @@ parts:
       - Jinja2
       - mpris-server
   monophony:
-    after: [ nuitka ]
+    after: [ nuitka, libexpat, zlib ]
     # See 'snapcraft plugins'
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
     source-tag: v$SNAPCRAFT_PROJECT_VERSION
     source-subdir: source
     source-type: git
-    build-packages:
-      - libpython3.10-dev
-      - libexpat1-dev
-      - zlib1g
     stage-packages:
-      - libgstreamer1.0-dev
+      - libgstreamer1.0-0
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
       - PYTHONPATH: /snap/gnome-42-2204-sdk/current/python3/dist-packages:$PYTHONPATH
