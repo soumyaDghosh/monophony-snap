@@ -6,16 +6,6 @@ icon: icon.svg
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 compression: lzo
-environment:
-  # WORKAROUND: Add python modules in Snap to search path
-  PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
-
-package-repositories:
-  - type: apt
-    components: [main, multiverse, restricted, universe]
-    suites: [lunar, lunar-backports, lunar-security, lunar-updates]
-    key-id: F6ECB3762474EDA9D21B7022871920D1991BC93C
-    url: http://security.ubuntu.com/ubuntu
     
 parts:
   libexpat:
@@ -91,7 +81,7 @@ apps:
     desktop: usr/share/applications/io.gitlab.zehkira.Monophony.desktop
     extensions: [gnome]
     environment:
-      PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
+      PYTHONPATH: $SNAP/lib/python3.10/site-packages:$SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
     plugs:
       - home
     slots:
