@@ -47,7 +47,7 @@ parts:
       pip install nuitka ordered-set
       export PATH=$HOME/.local/bin:$PATH
       craftctl default
-    parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
+    parse-info: [share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
   mpris_server:
     source: https://github.com/alexdelorenzo/mpris_server.git
     source-tag: 'v0.4.3'
