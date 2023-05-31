@@ -1,7 +1,7 @@
 name: monophony # you probably want to 'snapcraft register <name>'
 base: core22 # the base snap is the execution environment for this snap
 adopt-info: monophony
-icon: icon.svg
+#icon: icon.svg
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 compression: lzo
@@ -27,7 +27,7 @@ parts:
     override-prime: |
       echo 'Skip'
   monophony:
-    after: [ libexpat, zlib, mpris_server ]
+    after: [ libexpat, zlib, mpris-server ]
     # See 'snapcraft plugins'
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
@@ -59,17 +59,12 @@ parts:
       - -usr/share/doc/*
       - -usr/share/glib-2.0
       - -usr/share/lintian
-      - -usr/lib/x86_64-linux-gnu/girepository-1.0/GIRepository-2.0.typelib
-      - -usr/lib/x86_64-linux-gnu/girepository-1.0/GLib-2.0.typelib
-      - -usr/lib/x86_64-linux-gnu/girepository-1.0/GModule-2.0.typelib
-      - -usr/lib/x86_64-linux-gnu/girepository-1.0/GObject-2.0.typelib
-      - -usr/lib/x86_64-linux-gnu/girepository-1.0/Gio-2.0.typelib
       - -usr/lib/x86_64-linux-gnu/libgirepository*
       - -usr/lib/x86_64-linux-gnu/libdw*
       - -usr/lib/x86_64-linux-gnu/libunwind*
     organize:
       usr: .
-  mpris_server:
+  mpris-server:
     source: https://github.com/alexdelorenzo/mpris_server.git
     source-tag: 'v0.4.3'
     plugin: python
@@ -105,6 +100,13 @@ parts:
       - MarkupSafe
       - appdirs
       - Jinja2
+  cleanup:
+    after: [ monophony, mpris-serve ]
+    plugin: nil
+    override-prime: |
+      set -eux
+      cd $CRAFT_PRIME
+      rm -rf lib/x86_64-linux-gnu/girepository-1.0/GIRepository-2.0.typelib lib/x86_64-linux-gnu/girepository-1.0/GLib-2.0.typelib lib/x86_64-linux-gnu/girepository-1.0/GModule-2.0.typelib lib/x86_64-linux-gnu/girepository-1.0/GObject-2.0.typelib lib/x86_64-linux-gnu/girepository-1.0/Gio-2.0.typelib lib/x86_64-linux-gnu/libunwind* lib/x86_64-linux-gnu/libdw* lib/x86_64-linux-gnu/libunwind* share/doc
 apps:
   monophony:
     command: bin/monophony
