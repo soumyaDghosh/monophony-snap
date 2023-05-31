@@ -43,7 +43,7 @@ parts:
     override-pull: |
       craftctl default
       pip install nuitka
-      sed -i 's|prefix = /usr|prefix=${CRAFT_PART_INSTALL}/|' source/Makefile
+      sed -i 's|prefix = /usr|prefix=${CRAFT_PART_INSTALL}|' source/Makefile
       sed -i 's|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin --static-libpython=no|' source/Makefile
     override-build: |
       pip install nuitka ordered-set
