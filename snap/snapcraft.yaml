@@ -36,10 +36,12 @@ parts:
       # WORKAROUND: The python plugin is broken with gnome extension
       - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
       - PYTHONPATH: ""
+    python-packages:
+      - ordered-sets
     override-prime: |
       echo 'Skip'
   monophony:
-    after: [ nuitka, libexpat, zlib ]
+    after: [ nuitka, libexpat, zlib, mpris_server ]
     # See 'snapcraft plugins'
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
@@ -75,7 +77,6 @@ parts:
       cd $CRAFT_PRIME
       rm -rf usr/lib/*/libgir* usr/lib/python* usr/share/doc usr/share/pkgconfig usr/share/man usr/lib/$CRAFT_ARCH_TRIPLET
   mpris_server:
-    after: [ monophony ]
     source: https://github.com/alexdelorenzo/mpris_server.git
     source-tag: 'v0.4.3'
     plugin: python
@@ -83,9 +84,6 @@ parts:
       # WORKAROUND: The python plugin is broken with gnome extension
       - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
       - PYTHONPATH: ""    
-    override-prime: |
-      craftctl default
-      sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/bin/*
     stage:
       # WORKAROUND: Skip venv from python plugin
       - -bin/activate
