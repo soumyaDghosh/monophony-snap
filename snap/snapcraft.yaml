@@ -1,6 +1,7 @@
 name: monophony # you probably want to 'snapcraft register <name>'
 base: core22 # the base snap is the execution environment for this snap
 adopt-info: monophony
+icon: icon.svg
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 compression: lzo
@@ -26,7 +27,7 @@ parts:
     override-prime: |
       echo 'Skip'
   monophony:
-    after: [ libexpat, zlib ]
+    after: [ libexpat, zlib, mpris_server ]
     # See 'snapcraft plugins'
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
@@ -34,7 +35,7 @@ parts:
     source-subdir: source
     source-type: git
     stage-packages:
-      - python3-gst-1.0
+      - gir1.2-gstreamer-1.0
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
       - PYTHONPATH: ${CRAFT_STAGE}/lib/python3.10/site-packages:$PYTHONPATH
@@ -48,8 +49,18 @@ parts:
       export PATH=$HOME/.local/bin:$PATH
       craftctl default
     parse-info: [share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
+    prime:
+      - -usr/lib/x86_64-linux-gnu/glib
+      - -usr/lib/x86_64-linux-gnu/libgio*
+      - -usr/lib/x86_64-linux-gnu/libglib*
+      - -usr/lib/x86_64-linux-gnu/libgmodule*
+      - -usr/lib/x86_64-linux-gnu/libgobject*
+      - -usr/lib/x86_64-linux-gnu/libgthread*
+      - -usr/share/doc
+      - -usr/share/glib-2.0
+      - -usr/share/lintian
     organize:
-      usr/lib/python3/dist-packages: lib/python3.10/site-packages
+      usr: .
   mpris_server:
     source: https://github.com/alexdelorenzo/mpris_server.git
     source-tag: 'v0.4.3'
@@ -58,7 +69,7 @@ parts:
       # WORKAROUND: The python plugin is broken with gnome extension
       - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
       - PYTHONPATH: ""    
-    stage:
+    prime:
       # WORKAROUND: Skip venv from python plugin
       - -bin/activate
       - -bin/activate.cshordered-set
@@ -71,6 +82,11 @@ parts:
       - -bin/pip3
       - -bin/pip3.10
       - -pyvenv.cfg
+      - -lib/python3.10/site-packages/gi
+      - -lib/python3.10/site-packages/pygtkcompat
+      - -lib/python3.10/site-packages/PyG*
+      - -share
+      - -include
     python-packages:  
       - requests
       - ytmusicapi
@@ -79,7 +95,6 @@ parts:
       - MarkupSafe
       - appdirs
       - Jinja2
-
 apps:
   monophony:
     command: bin/monophony
