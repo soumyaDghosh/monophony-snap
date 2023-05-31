@@ -31,6 +31,7 @@ parts:
     plugin: python
     source: https://github.com/Nuitka/Nuitka.git
     source-tag: 1.4.8
+    source-type: git
     override-prime: |
       echo 'Skip'
   monophony:
@@ -41,14 +42,14 @@ parts:
     source-tag: v$SNAPCRAFT_PROJECT_VERSION
     source-subdir: source
     source-type: git
-    build-packages:
-      - libpython3.10-dev
     stage-packages:
       - libgstreamer1.0-0
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
+      - PYTHONPATH: ${CRAFT_STAGE}/lib/python3.10/site-packages:$PYTHONPATH
     override-pull: |
       craftctl default
+      pip install nuitka
       sed -i 's|prefix = /usr|prefix=${CRAFT_PART_INSTALL}/usr|' source/Makefile
       sed -i 's|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin --static-libpython=no|' source/Makefile
       pip install --prefix=$CRAFT_PART_INSTALL/usr requests
