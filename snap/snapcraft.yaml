@@ -37,7 +37,7 @@ parts:
       - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
       - PYTHONPATH: ""
     python-packages:
-      - ordered-sets
+      - ordered-set
     override-prime: |
       echo 'Skip'
   monophony:
@@ -87,7 +87,7 @@ parts:
     stage:
       # WORKAROUND: Skip venv from python plugin
       - -bin/activate
-      - -bin/activate.csh
+      - -bin/activate.cshordered-set
       - -bin/activate.fish
       - -bin/Activate.ps1
       - -bin/python
