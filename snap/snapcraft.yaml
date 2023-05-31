@@ -34,7 +34,7 @@ parts:
     source-subdir: source
     source-type: git
     stage-packages:
-      - libgstreamer1.0-0
+      - python3-gst-1.0
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
       - PYTHONPATH: ${CRAFT_STAGE}/lib/python3.10/site-packages:$PYTHONPATH
