@@ -48,6 +48,8 @@ parts:
       export PATH=$HOME/.local/bin:$PATH
       craftctl default
     parse-info: [share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
+    organize:
+      usr/lib/python3/dist-packages: lib/python3.10/site-packages
   mpris_server:
     source: https://github.com/alexdelorenzo/mpris_server.git
     source-tag: 'v0.4.3'
