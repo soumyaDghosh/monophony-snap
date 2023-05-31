@@ -56,18 +56,18 @@ parts:
     override-pull: |
       craftctl default
       pip install nuitka
-      sed -i 's|prefix = /usr|prefix=${CRAFT_PART_INSTALL}/usr|' source/Makefile
+      sed -i 's|prefix = /usr|prefix=${CRAFT_PART_INSTALL}/|' source/Makefile
       sed -i 's|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin --static-libpython=no|' source/Makefile
-      pip install --prefix=$CRAFT_PART_INSTALL/usr requests
-      pip install --prefix=$CRAFT_PART_INSTALL/usr ytmusicapi
-      pip install --prefix=$CRAFT_PART_INSTALL/usr yt-dlp
-      pip install --prefix=$CRAFT_PART_INSTALL/usr lxml
-      pip install --prefix=$CRAFT_PART_INSTALL/usr MarkupSafe
-      pip install --prefix=$CRAFT_PART_INSTALL/usr appdirs
-      pip install --prefix=$CRAFT_PART_INSTALL/usr Jinja2
-      sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/usr/local/bin/*
+      pip install --prefix=$CRAFT_PART_INSTALL requests
+      pip install --prefix=$CRAFT_PART_INSTALL ytmusicapi
+      pip install --prefix=$CRAFT_PART_INSTALL yt-dlp
+      pip install --prefix=$CRAFT_PART_INSTALL lxml
+      pip install --prefix=$CRAFT_PART_INSTALL MarkupSafe
+      pip install --prefix=$CRAFT_PART_INSTALL appdirs
+      pip install --prefix=$CRAFT_PART_INSTALL Jinja2
+      sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/local/bin/*
     organize:
-      usr/local: usr
+      local: usr
     parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
   cleanup:
     after: [ monophony ]
@@ -97,9 +97,6 @@ parts:
       - -bin/pip3
       - -bin/pip3.10
       - -pyvenv.cfg
-    organize:
-      bin: usr/bin
-      lib: usr/lib
     
 
 
