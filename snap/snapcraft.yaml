@@ -31,11 +31,6 @@ parts:
     plugin: python
     source: https://github.com/Nuitka/Nuitka.git
     source-tag: 1.4.8
-    source-type: git
-    build-environment:
-      # WORKAROUND: The python plugin is broken with gnome extension
-      - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
-      - PYTHONPATH: ""
     override-prime: |
       echo 'Skip'
   monophony:
@@ -63,7 +58,6 @@ parts:
       pip install --prefix=$CRAFT_PART_INSTALL/usr MarkupSafe
       pip install --prefix=$CRAFT_PART_INSTALL/usr appdirs
       pip install --prefix=$CRAFT_PART_INSTALL/usr Jinja2
-      pip install --prefix=$CRAFT_PART_INSTALL/usr mpris-server
       sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/usr/local/bin/*
     organize:
       usr/local: usr
@@ -75,6 +69,19 @@ parts:
       craftctl default
       cd $CRAFT_PRIME
       rm -rf usr/lib/*/libgir* usr/lib/python* usr/share/doc usr/share/pkgconfig usr/share/man usr/lib/$CRAFT_ARCH_TRIPLET
+  mpris_server:
+    after: [ monophony ]
+    source: https://github.com/alexdelorenzo/mpris_server.git
+    source-tag: 'v0.4.3'
+    plugin: python
+    override-prime: |
+      craftctl default
+      sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/bin/*
+    organize:
+      bin: usr/bin
+      lib: usr/lib
+    
+
 
 apps:
   monophony:
