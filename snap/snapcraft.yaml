@@ -101,7 +101,7 @@ parts:
       - appdirs
       - Jinja2
   cleanup:
-    after: [ monophony, mpris-serve ]
+    after: [ monophony, mpris-server ]
     plugin: nil
     override-prime: |
       set -eux
