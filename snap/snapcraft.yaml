@@ -25,7 +25,7 @@ parts:
     plugin: autotools
     autotools-configure-parameters:
       - --prefix=/usr
-    override-prime:
+    override-prime: |
       echo 'Skip'
   nuitka:
     plugin: python
@@ -36,15 +36,8 @@ parts:
       # WORKAROUND: The python plugin is broken with gnome extension
       - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
       - PYTHONPATH: ""
-    python-packages:
-      - requests 
-      - ytmusicapi 
-      - yt-dlp 
-      - lxml 
-      - MarkupSafe 
-      - appdirs 
-      - Jinja2
-      - mpris-server
+    override-prime: |
+      echo 'Skip'
   monophony:
     after: [ nuitka, libexpat, zlib ]
     # See 'snapcraft plugins'
@@ -56,15 +49,24 @@ parts:
     build-packages:
       - libpython3.10-dev
     stage-packages:
-      - libpython3.10
       - libgstreamer1.0-0
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
-      - PYTHONPATH: /snap/gnome-42-2204-sdk/current/python3/dist-packages:$PYTHONPATH
     override-pull: |
       craftctl default
       sed -i 's|prefix = /usr|prefix=${CRAFT_PART_INSTALL}/usr|' source/Makefile
       sed -i 's|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin --static-libpython=no|' source/Makefile
+      pip install --prefix=$CRAFT_PART_INSTALL/usr requests
+      pip install --prefix=$CRAFT_PART_INSTALL/usr ytmusicapi
+      pip install --prefix=$CRAFT_PART_INSTALL/usr yt-dlp
+      pip install --prefix=$CRAFT_PART_INSTALL/usr lxml
+      pip install --prefix=$CRAFT_PART_INSTALL/usr MarkupSafe
+      pip install --prefix=$CRAFT_PART_INSTALL/usr appdirs
+      pip install --prefix=$CRAFT_PART_INSTALL/usr Jinja2
+      pip install --prefix=$CRAFT_PART_INSTALL/usr mpris-server
+      sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/usr/local/bin/*
+    organize:
+      usr/local: usr
     parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
   cleanup:
     after: [ monophony ]
@@ -80,7 +82,7 @@ apps:
     desktop: usr/share/applications/io.gitlab.zehkira.Monophony.desktop
     extensions: [gnome]
     environment:
-      PYTHONPATH: $SNAP/lib/python3.10/site-packages:$SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
+      PYTHONPATH: $SNAP/usr/lib/python3.10/dist-packages:$PYTHONPATH
     plugs:
       - home
     slots:
