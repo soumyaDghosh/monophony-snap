@@ -50,13 +50,6 @@ parts:
       export PATH=$HOME/.local/bin:$PATH
       craftctl default
     parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
-  cleanup:
-    after: [ monophony ]
-    plugin: nil
-    override-prime: |
-      craftctl default
-      cd $CRAFT_PRIME
-      rm -rf usr/lib/*/libgir* usr/lib/python* usr/share/doc usr/share/pkgconfig usr/share/man usr/lib/$CRAFT_ARCH_TRIPLET
   mpris_server:
     source: https://github.com/alexdelorenzo/mpris_server.git
     source-tag: 'v0.4.3'
