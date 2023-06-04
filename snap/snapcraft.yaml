@@ -16,22 +16,17 @@ parts:
     autotools-configure-parameters:
       - --prefix=/usr
       - --without-docbook
-    override-prime: |
-      echo 'Skip'
   zlib:
     source: https://github.com/madler/zlib.git
     source-tag: v1.2.13
     plugin: autotools
     autotools-configure-parameters:
       - --prefix=/usr
-    override-prime: |
-      echo 'Skip'
   monophony:
     after: [ libexpat, zlib, mpris-server ]
     # See 'snapcraft plugins'
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
-    source-tag: v1.7.1
     source-subdir: source
     source-type: git
     stage-packages:
