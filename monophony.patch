@@ -1,0 +1,40 @@
+diff -Naur a/source/data/metainfo.xml b/source/data/metainfo.xml
+--- a/source/data/metainfo.xml	2023-06-05 08:09:20.840083793 +0530
++++ b/source/data/metainfo.xml	2023-06-05 08:20:41.178916868 +0530
+@@ -1,6 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <component type="desktop">
+   <id>io.gitlab.zehkira.Monophony</id>
++  <icon type="stock">snap.monophony.io.gitlab.zehkira.Monophony</icon>
+   <metadata_license>FSFAP</metadata_license>
+   <project_license>AGPL-3.0-or-later</project_license>
+   <name>Monophony</name>
+diff -Naur a/source/data/monophony.desktop b/source/data/monophony.desktop
+--- a/source/data/monophony.desktop	2023-06-05 08:09:35.760228247 +0530
++++ b/source/data/monophony.desktop	2023-06-05 08:20:59.178896847 +0530
+@@ -6,6 +6,6 @@
+ Terminal=false
+ Type=Application
+ StartupNotify=false
+-Icon=io.gitlab.zehkira.Monophony
++Icon=snap.monophony.io.gitlab.zehkira.Monophony
+ Categories=AudioVideo;Audio;Music;
+ X-Purism-FormFactor=Workstation;Mobile;
+diff -Naur a/source/Makefile b/source/Makefile
+--- a/source/Makefile	2023-06-05 08:08:17.008493068 +0530
++++ b/source/Makefile	2023-06-05 08:22:04.647191207 +0530
+@@ -1,4 +1,4 @@
+-prefix = /usr
++prefix = ${CRAFT_PART_INSTALL}
+ 
+ INSTALL = install -D
+ INSTALL_DATA = ${INSTALL} -m 644
+@@ -6,7 +6,7 @@
+ 
+ 
+ build:
+-	python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin
++	python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin --static-libpython=no
+ 
+ 
+ install:
