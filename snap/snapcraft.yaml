@@ -37,7 +37,7 @@ parts:
     # See 'snapcraft plugins'
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
-    #source-subdir: source
+    source-subdir: source
     source-tag: 'v1.8.0'
     source-depth: 1
     stage-packages:
@@ -51,9 +51,10 @@ parts:
     override-build: |
       pip install nuitka ordered-set
       export PATH=$HOME/.local/bin:$PATH
-      cd source
-      make build
-      make install
+      craftctl default
+      #cd source
+      #make build
+      #make install
     override-prime: |
       craftctl default
       mkdir -p meta/gui
