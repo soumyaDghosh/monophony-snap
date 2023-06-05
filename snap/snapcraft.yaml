@@ -6,6 +6,12 @@ grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 compression: lzo
     
+    
+slots:
+  monophony:
+    interface: dbus
+    bus: session
+    name: io.gitlab.zehkira.Monophony
 parts:
   libexpat:
     source: https://github.com/libexpat/libexpat.git
@@ -16,36 +22,69 @@ parts:
     autotools-configure-parameters:
       - --prefix=/usr
       - --without-docbook
+    override-prime: |
+      echo "skip"
   zlib:
     source: https://github.com/madler/zlib.git
     source-tag: v1.2.13
     plugin: autotools
     autotools-configure-parameters:
       - --prefix=/usr
+    override-prime: |
+      echo "skip"
   monophony:
     after: [ libexpat, zlib, mpris-server ]
     # See 'snapcraft plugins'
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
-    source-subdir: source
-    source-type: git
+    #source-subdir: source
+    source-tag: 'v1.8.0'
+    source-depth: 1
     stage-packages:
       - gir1.2-gstreamer-1.0
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
-      - PYTHONPATH: ${CRAFT_STAGE}/lib/python3.10/site-packages:$PYTHONPATH
+      - PYTHONPATH: ""
     override-pull: |
       craftctl default
-      pip install nuitka
-      sed -i 's|prefix = /usr|prefix = ${CRAFT_PART_INSTALL}|' source/Makefile
-      sed -i 's|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin|python3 -m nuitka bin/monophony.py --remove-output --clean-cache=all --follow-import-to=monophony -o monophony.bin --static-libpython=no|' source/Makefile
+      patch -p1 < $CRAFT_PROJECT_DIR/monophony.patch
     override-build: |
       pip install nuitka ordered-set
       export PATH=$HOME/.local/bin:$PATH
+      cd source
+      make build
+      make install
+    override-prime: |
       craftctl default
+      mkdir -p meta/gui
+      cp -r usr/share/icons meta/gui/
+      for i in `find meta/gui/icons -name "*.svg" -o -name "*.png"`; do
+        mv $i "`dirname $i`/snap.$CRAFT_PROJECT_NAME.`basename $i`"
+      done
     parse-info: [share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
     organize:
       usr: .
+    prime:
+      - -lib/$CRAFT_ARCH_TRIPLET/glib*
+      - -lib/$CRAFT_ARCH_TRIPLET/libgio*
+      - -lib/$CRAFT_ARCH_TRIPLET/libglib*
+      - -lib/$CRAFT_ARCH_TRIPLET/libgmodule*
+      - -lib/$CRAFT_ARCH_TRIPLET/libgobject*
+      - -lib/$CRAFT_ARCH_TRIPLET/libgthread*
+      - -share/doc/*
+      - -share/glib-2.0
+      - -share/lintian
+      - -lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GIRepository-2.0.typelib
+      - -lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GLib-2.0.typelib
+      - -lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GModule-2.0.typelib
+      - -lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GObject-2.0.typelib
+      - -lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/Gio-2.0.typelib
+      - -lib/$CRAFT_ARCH_TRIPLET/libgirepository*
+      - -lib/$CRAFT_ARCH_TRIPLET/libdw*
+      - -lib/$CRAFT_ARCH_TRIPLET/libunwind*    
+      - -lib/$CRAFT_ARCH_TRIPLET/libgst*
+      - -lib/*/gstreamer*
+      - -share/doc
   mpris-server:
     source: https://github.com/alexdelorenzo/mpris_server.git
     source-tag: 'v0.4.3'
@@ -58,35 +97,11 @@ parts:
       - requests
       - ytmusicapi
       - yt-dlp
-      - lxml
-      - MarkupSafe
-      - appdirs
-      - Jinja2
-  cleanup:
-    after: [ monophony, mpris-server ]
-    plugin: nil
+      - zstandard
     prime:
-      - -lib/x86_64-linux-gnu/glib*
-      - -lib/x86_64-linux-gnu/libgio*
-      - -lib/x86_64-linux-gnu/libglib*
-      - -lib/x86_64-linux-gnu/libgmodule*
-      - -lib/x86_64-linux-gnu/libgobject*
-      - -lib/x86_64-linux-gnu/libgthread*
-      - -share/doc/*
-      - -share/glib-2.0
-      - -share/lintian
-      - -lib/x86_64-linux-gnu/girepository-1.0/GIRepository-2.0.typelib
-      - -lib/x86_64-linux-gnu/girepository-1.0/GLib-2.0.typelib
-      - -lib/x86_64-linux-gnu/girepository-1.0/GModule-2.0.typelib
-      - -lib/x86_64-linux-gnu/girepository-1.0/GObject-2.0.typelib
-      - -lib/x86_64-linux-gnu/girepository-1.0/Gio-2.0.typelib
-      - -lib/x86_64-linux-gnu/libgirepository*
-      - -lib/x86_64-linux-gnu/libdw*
-      - -lib/x86_64-linux-gnu/libunwind*    
       - -bin/activate
-      - -bin/activate.cshordered-set
-      - -bin/activate.fish
       - -bin/activate.csh
+      - -bin/activate.fish
       - -bin/Activate.ps1
       - -bin/python
       - -bin/python3
@@ -99,6 +114,11 @@ parts:
       - -lib/python3.10/site-packages/pygtkcompat
       - -lib/python3.10/site-packages/PyG*
       - -lib/python3.10/site-packages/pycairo*
+      - -lib/python3.10/site-packages/cairo*
+      - -lib/*/*/setup*
+      - -lib/*/*/pkg*
+      - -lib/*/*/pip*
+      - -lib/*/*/_dist*
       - -share
       - -include     
 apps:
@@ -106,9 +126,15 @@ apps:
     command: bin/monophony
     desktop: share/applications/io.gitlab.zehkira.Monophony.desktop
     extensions: [gnome]
+    common-id: io.gitlab.zehkira.Monophony
     environment:
       PYTHONPATH: $SNAP/lib/python3.10/site-packages:$PYTHONPATH
+      GI_TYPELIB_PATH: $SNAP/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
     plugs:
       - home
+      - network
+      - audio-playback
+      - network-bind
+      - network-status
     slots:
       - mpris
