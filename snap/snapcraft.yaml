@@ -58,7 +58,7 @@ parts:
     override-prime: |
       craftctl default
       mkdir -p meta/gui
-      cp -r usr/share/icons meta/gui/
+      cp -r share/icons meta/gui/
       for i in `find meta/gui/icons -name "*.svg" -o -name "*.png"`; do
         mv $i "`dirname $i`/snap.$CRAFT_PROJECT_NAME.`basename $i`"
       done
