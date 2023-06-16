@@ -38,7 +38,7 @@ parts:
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
     source-subdir: source
-    source-tag: 'v1.8.0'
+    source-tag: 'v1.9.0'
     source-depth: 1
     stage-packages:
       - gir1.2-gstreamer-1.0
