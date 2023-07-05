@@ -1,6 +1,6 @@
-diff -Naur a/data/metainfo.xml b/data/metainfo.xml
---- a/data/metainfo.xml	2023-07-05 16:38:04.451425501 +0530
-+++ b/data/metainfo.xml	2023-07-05 16:35:36.486739484 +0530
+diff -Naur a/source/data/metainfo.xml b/source/data/metainfo.xml
+--- a/source/data/metainfo.xml	2023-07-05 16:38:04.451425501 +0530
++++ b/source/data/metainfo.xml	2023-07-05 16:35:36.486739484 +0530
 @@ -1,6 +1,7 @@
  <?xml version="1.0" encoding="UTF-8"?>
  <component type="desktop">
@@ -9,9 +9,9 @@ diff -Naur a/data/metainfo.xml b/data/metainfo.xml
    <metadata_license>FSFAP</metadata_license>
    <project_license>AGPL-3.0-or-later</project_license>
    <name>Monophony</name>
-diff -Naur a/data/monophony.desktop b/data/monophony.desktop
---- a/data/monophony.desktop	2023-07-05 16:38:40.375592044 +0530
-+++ b/data/monophony.desktop	2023-07-05 16:35:36.486739484 +0530
+diff -Naur a/source/data/monophony.desktop b/source/data/monophony.desktop
+--- a/source/data/monophony.desktop	2023-07-05 16:38:40.375592044 +0530
++++ b/source/data/monophony.desktop	2023-07-05 16:35:36.486739484 +0530
 @@ -6,6 +6,6 @@
  Terminal=false
  Type=Application
