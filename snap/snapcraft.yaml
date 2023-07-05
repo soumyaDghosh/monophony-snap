@@ -5,8 +5,8 @@ adopt-info: monophony
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 compression: lzo
-    
-    
+
+
 slots:
   monophony:
     interface: dbus
@@ -38,7 +38,7 @@ parts:
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
     source-subdir: source
-    source-tag: 'v1.9.0'
+    source-tag: 'v1.10.0'
     source-depth: 1
     stage-packages:
       - gir1.2-gstreamer-1.0
@@ -82,7 +82,7 @@ parts:
       - -lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/Gio-2.0.typelib
       - -lib/$CRAFT_ARCH_TRIPLET/libgirepository*
       - -lib/$CRAFT_ARCH_TRIPLET/libdw*
-      - -lib/$CRAFT_ARCH_TRIPLET/libunwind*    
+      - -lib/$CRAFT_ARCH_TRIPLET/libunwind*
       - -lib/$CRAFT_ARCH_TRIPLET/libgst*
       - -lib/*/gstreamer*
       - -share/doc
@@ -93,8 +93,8 @@ parts:
     build-environment:
       # WORKAROUND: The python plugin is broken with gnome extension
       - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
-      - PYTHONPATH: ""    
-    python-packages:  
+      - PYTHONPATH: ""
+    python-packages:
       - requests
       - ytmusicapi
       - yt-dlp
@@ -121,7 +121,7 @@ parts:
       - -lib/*/*/pip*
       - -lib/*/*/_dist*
       - -share
-      - -include     
+      - -include
 apps:
   monophony:
     command: bin/monophony
