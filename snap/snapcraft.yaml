@@ -45,6 +45,8 @@ parts:
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
       - PYTHONPATH: ""
+    make-parameters:
+      - prefix=${CRAFT_PART_INSTALL}
     override-pull: |
       craftctl default
       patch -p1 < $CRAFT_PROJECT_DIR/monophony.patch
@@ -52,9 +54,6 @@ parts:
       pip install nuitka ordered-set
       export PATH=$HOME/.local/bin:$PATH
       craftctl default
-      #cd source
-      #make build
-      #make install
     override-prime: |
       craftctl default
       mkdir -p meta/gui
