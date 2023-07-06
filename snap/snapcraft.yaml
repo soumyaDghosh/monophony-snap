@@ -40,8 +40,6 @@ parts:
     source-subdir: source
     source-tag: 'v1.10.0'
     source-depth: 1
-    stage-packages:
-      - gir1.2-gstreamer-1.0
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
       - PYTHONPATH: ""
@@ -64,27 +62,30 @@ parts:
     parse-info: [share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
     organize:
       usr: .
+  deps:
+    plugin: nil
+    stage-packages:
+      - gir1.2-gstreamer-1.0
+      - gir1.2-gst-plugins-base-1.0
     prime:
-      - -lib/$CRAFT_ARCH_TRIPLET/glib*
-      - -lib/$CRAFT_ARCH_TRIPLET/libgio*
-      - -lib/$CRAFT_ARCH_TRIPLET/libglib*
-      - -lib/$CRAFT_ARCH_TRIPLET/libgmodule*
-      - -lib/$CRAFT_ARCH_TRIPLET/libgobject*
-      - -lib/$CRAFT_ARCH_TRIPLET/libgthread*
-      - -share/doc/*
-      - -share/glib-2.0
-      - -share/lintian
-      - -lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GIRepository-2.0.typelib
-      - -lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GLib-2.0.typelib
-      - -lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GModule-2.0.typelib
-      - -lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GObject-2.0.typelib
-      - -lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/Gio-2.0.typelib
-      - -lib/$CRAFT_ARCH_TRIPLET/libgirepository*
-      - -lib/$CRAFT_ARCH_TRIPLET/libdw*
-      - -lib/$CRAFT_ARCH_TRIPLET/libunwind*
-      - -lib/$CRAFT_ARCH_TRIPLET/libgst*
-      - -lib/*/gstreamer*
-      - -share/doc
+      - usr/lib/*/girepository-1.0/GstAllocators-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstApp-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstAudio-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstGL-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstGLEGL-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstGLWayland-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstGLX11-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstPbutils-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstRtp-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstRtsp-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstSdp-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstTag-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstVideo-1.0.typelib
+      - usr/lib/*/girepository-1.0/Gst-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstBase-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstCheck-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstController-1.0.typelib
+      - usr/lib/*/girepository-1.0/GstNet-1.0.typelib
   mpris-server:
     source: https://github.com/alexdelorenzo/mpris_server.git
     source-tag: 'v0.4.3'
