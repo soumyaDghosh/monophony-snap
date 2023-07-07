@@ -22,9 +22,12 @@ diff -Naur a/source/data/monophony.desktop b/source/data/monophony.desktop
  X-Purism-FormFactor=Workstation;Mobile;
 diff -Naur a/source/Makefile b/source/Makefile
 --- a/source/Makefile	2023-07-05 16:41:35.060401791 +0530
-+++ b/source/Makefile	2023-07-05 16:40:48.216184665 +0530
-@@ -14,6 +14,7 @@
- 	--follow-import-to=ytmusicapi \
++++ b/source/Makefile	2023-07-07 20:23:45.603286362 +0530
+@@ -11,9 +11,9 @@
+ 	--remove-output \
+ 	--clean-cache=all \
+ 	--follow-import-to=monophony \
+-	--follow-import-to=ytmusicapi \
  	--follow-import-to=mpris_server \
  	--follow-import-to=gi \
 +	--static-libpython=no \
