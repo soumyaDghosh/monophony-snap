@@ -1,11 +1,13 @@
 name: monophony # you probably want to 'snapcraft register <name>'
 base: core22 # the base snap is the execution environment for this snap
 adopt-info: monophony
-#icon: icon.svg
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 compression: lzo
-
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+  - build-on: armhf
 
 slots:
   monophony:
