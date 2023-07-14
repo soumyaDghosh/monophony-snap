@@ -18,6 +18,9 @@ parts:
   libexpat:
     source: https://github.com/libexpat/libexpat.git
     source-tag: R_2_5_0
+# ext:updatesnap
+#   version-format:
+#     format: "R_%M_%m_%R"
     source-subdir: expat
     source-depth: 1
     plugin: autotools
@@ -29,6 +32,7 @@ parts:
   zlib:
     source: https://github.com/madler/zlib.git
     source-tag: v1.2.13
+    source-depth: 1
     plugin: autotools
     autotools-configure-parameters:
       - --prefix=/usr
@@ -93,6 +97,9 @@ parts:
   mpris-server:
     source: https://github.com/alexdelorenzo/mpris_server.git
     source-tag: 'v0.4.3'
+# ext:updatesnap
+#   version-format:
+#     ignore: true    
     plugin: python
     build-environment:
       # WORKAROUND: The python plugin is broken with gnome extension
