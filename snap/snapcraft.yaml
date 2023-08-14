@@ -55,7 +55,7 @@ parts:
       craftctl default
       patch -p1 < $CRAFT_PROJECT_DIR/monophony.patch
     override-build: |
-      pip install nuitka==1.6.3 ordered-set==4.1.0
+      pip install nuitka==1.7.9 ordered-set==4.1.0
       export PATH=$HOME/.local/bin:$PATH
       craftctl default
     override-prime: |
@@ -99,15 +99,15 @@ parts:
     source-tag: 'v0.4.3'
 # ext:updatesnap
 #   version-format:
-#     ignore: true    
+#     ignore: true
     plugin: python
     build-environment:
       # WORKAROUND: The python plugin is broken with gnome extension
       - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
       - PYTHONPATH: ""
     python-packages:
-      - ytmusicapi==1.0.2
-      - yt-dlp==2023.3.4
+      - ytmusicapi==1.1.1
+      - yt-dlp==2023.7.6
     prime:
       - -bin/activate
       - -bin/activate.csh
