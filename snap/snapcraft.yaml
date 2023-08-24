@@ -55,7 +55,7 @@ parts:
       craftctl default
       patch -p1 < $CRAFT_PROJECT_DIR/monophony.patch
     override-build: |
-      pip install nuitka==1.7.9 ordered-set==4.1.0
+      pip install nuitka==1.7.10 ordered-set==4.1.0
       export PATH=$HOME/.local/bin:$PATH
       craftctl default
     override-prime: |
@@ -106,7 +106,7 @@ parts:
       - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
       - PYTHONPATH: ""
     python-packages:
-      - ytmusicapi==1.1.1
+      - ytmusicapi==1.2.0
       - yt-dlp==2023.7.6
     prime:
       - -bin/activate
