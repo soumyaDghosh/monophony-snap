@@ -1,8 +1,8 @@
-name: monophony # you probably want to 'snapcraft register <name>'
-base: core22 # the base snap is the execution environment for this snap
+name: monophony
+base: core22 
 adopt-info: monophony
-grade: stable # must be 'stable' to release into candidate/stable channels
-confinement: strict # use 'strict' once you have the right plugs and slots
+grade: stable 
+confinement: strict 
 compression: lzo
 architectures:
   - build-on: amd64
@@ -141,7 +141,6 @@ apps:
       PYTHONPATH: $SNAP/lib/python3.10/site-packages:$PYTHONPATH
       GI_TYPELIB_PATH: $SNAP/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
     plugs:
-      - home
       - network
       - audio-playback
       - network-bind
