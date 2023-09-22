@@ -9,11 +9,18 @@ architectures:
   - build-on: arm64
   - build-on: armhf
 
+plugs:
+  ffmpeg-2204:
+    interface: content
+    target: ffmpeg-platform
+    default-provider: ffmpeg-2204
+
 slots:
   monophony:
     interface: dbus
     bus: session
     name: io.gitlab.zehkira.Monophony
+
 parts:
   libexpat:
     source: https://github.com/libexpat/libexpat.git
@@ -138,8 +145,10 @@ apps:
     extensions: [gnome]
     common-id: io.gitlab.zehkira.Monophony
     environment:
+      PATH: $SNAP/ffmpeg-platform/usr/bin:$PATH
       PYTHONPATH: $SNAP/lib/python3.10/site-packages:$PYTHONPATH
       GI_TYPELIB_PATH: $SNAP/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
+      LD_LIBRARY_PATH: $SNAP/ffmpeg-platform/usr/lib/$CRAFT_ARCH_TRIPLET:$LD_LIBRARY_PATH
     plugs:
       - network
       - audio-playback
