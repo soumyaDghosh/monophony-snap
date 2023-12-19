@@ -58,20 +58,10 @@ parts:
       - PYTHONPATH: ""
     make-parameters:
       - prefix=${CRAFT_PART_INSTALL}
-    override-pull: |
-      craftctl default
-      patch -p1 < $CRAFT_PROJECT_DIR/monophony.patch
     override-build: |
       pip install nuitka==1.9.5 ordered-set==4.1.0
       export PATH=$HOME/.local/bin:$PATH
       craftctl default
-    override-prime: |
-      craftctl default
-      mkdir -p meta/gui
-      cp -r share/icons meta/gui/
-      for i in `find meta/gui/icons -name "*.svg" -o -name "*.png"`; do
-        mv $i "`dirname $i`/snap.$CRAFT_PROJECT_NAME.`basename $i`"
-      done
     parse-info: [share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
     organize:
       usr: .
