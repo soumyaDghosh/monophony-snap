@@ -51,7 +51,7 @@ parts:
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
     source-subdir: source
-    source-tag: 'v2.5.0'
+    source-tag: 'v2.5.1'
     source-depth: 1
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
@@ -62,7 +62,7 @@ parts:
       craftctl default
       patch -p1 < $CRAFT_PROJECT_DIR/monophony.patch
     override-build: |
-      pip install nuitka==1.7.10 ordered-set==4.1.0
+      pip install nuitka==1.9.5 ordered-set==4.1.0
       export PATH=$HOME/.local/bin:$PATH
       craftctl default
     override-prime: |
@@ -113,8 +113,8 @@ parts:
       - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
       - PYTHONPATH: ""
     python-packages:
-      - ytmusicapi==1.2.0
-      - yt-dlp==2023.7.6
+      - ytmusicapi==1.3.2
+      - yt-dlp==2023.11.16
     prime:
       - -bin/activate
       - -bin/activate.csh
