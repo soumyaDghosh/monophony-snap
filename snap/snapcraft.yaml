@@ -62,7 +62,7 @@ parts:
       pip install nuitka==1.9.5 ordered-set==4.1.0
       export PATH=$HOME/.local/bin:$PATH
       craftctl default
-      sed -i 's|Icon=io.gitlab.zehkira.Monophony|Icon=${SNAP}/share/icons/scalable/apps/io.gitlab.zehkira.Monophony.svg|' $CRAFT_PART_INSTALL/share/applications/io.gitlab.zehkira.Monophony.desktop
+      sed -i 's|Icon=io.gitlab.zehkira.Monophony|Icon=${SNAP}/share/icons/hicolor/scalable/apps/io.gitlab.zehkira.Monophony.svg|' $CRAFT_PART_INSTALL/share/applications/io.gitlab.zehkira.Monophony.desktop
     parse-info: [share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
     organize:
       usr: .
