@@ -38,7 +38,7 @@ parts:
       echo "skip"
   zlib:
     source: https://github.com/madler/zlib.git
-    source-tag: v1.2.13
+    source-tag: 'v1.3.1'
     source-depth: 1
     plugin: autotools
     autotools-configure-parameters:
