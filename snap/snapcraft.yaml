@@ -4,6 +4,10 @@ adopt-info: monophony
 grade: stable 
 confinement: strict 
 compression: lzo
+source-code: https://gitlab.com/zehkira/monophony
+website: https://github.com/soumyaDghosh/monophony-snap
+issues: https://github.com/soumyaDghosh/monophony-snap/issues
+
 architectures:
   - build-on: amd64
   - build-on: arm64
@@ -34,8 +38,8 @@ parts:
     autotools-configure-parameters:
       - --prefix=/usr
       - --without-docbook
-    override-prime: |
-      echo "skip"
+    override-prime: ''
+
   zlib:
     source: https://github.com/madler/zlib.git
     source-tag: 'v1.3.1'
@@ -43,8 +47,8 @@ parts:
     plugin: autotools
     autotools-configure-parameters:
       - --prefix=/usr
-    override-prime: |
-      echo "skip"
+    override-prime: ''
+
   monophony:
     after: [ libexpat, zlib, mpris-server ]
     # See 'snapcraft plugins'
@@ -61,11 +65,13 @@ parts:
     override-build: |
       pip install nuitka==1.9.5 ordered-set==4.1.0
       export PATH=$HOME/.local/bin:$PATH
+      sed -i 's|https://gitlab.com/zehkira/monophony/-/issues|https://github.com/soumyaDghosh/monophony-snap/issues|' ${CRAFT_PART_SRC_WORK}/monophony/frontend/windows/main_window.py
       craftctl default
-      sed -i 's|Icon=io.gitlab.zehkira.Monophony|Icon=${SNAP}/share/icons/hicolor/scalable/apps/io.gitlab.zehkira.Monophony.svg|' $CRAFT_PART_INSTALL/share/applications/io.gitlab.zehkira.Monophony.desktop
+      sed -i 's|Icon=io.gitlab.zehkira.Monophony|Icon=${SNAP}/share/icons/hicolor/scalable/apps/io.gitlab.zehkira.Monophony.svg|' ${CRAFT_PART_INSTALL}/share/applications/io.gitlab.zehkira.Monophony.desktop
     parse-info: [share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
     organize:
       usr: .
+
   deps:
     plugin: nil
     stage-packages:
@@ -92,6 +98,7 @@ parts:
       - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstNet-1.0.typelib
     organize:
       usr: .
+
   mpris-server:
     source: https://github.com/alexdelorenzo/mpris_server.git
     source-tag: 'v0.4.3'
@@ -129,6 +136,7 @@ parts:
       - -lib/*/*/_dist*
       - -share
       - -include
+
 apps:
   monophony:
     command: bin/monophony
