@@ -1,33 +1,9 @@
-diff -Naur a/source/data/metainfo.xml b/source/data/metainfo.xml
---- a/source/data/metainfo.xml	2023-07-05 16:38:04.451425501 +0530
-+++ b/source/data/metainfo.xml	2023-07-05 16:35:36.486739484 +0530
-@@ -1,6 +1,7 @@
- <?xml version="1.0" encoding="UTF-8"?>
- <component type="desktop">
-   <id>io.gitlab.zehkira.Monophony</id>
-+  <icon type="stock">snap.monophony.io.gitlab.zehkira.Monophony</icon>
-   <metadata_license>FSFAP</metadata_license>
-   <project_license>AGPL-3.0-or-later</project_license>
-   <name>Monophony</name>
-diff -Naur a/source/data/monophony.desktop b/source/data/monophony.desktop
---- a/source/data/monophony.desktop	2023-07-05 16:38:40.375592044 +0530
-+++ b/source/data/monophony.desktop	2023-07-05 16:35:36.486739484 +0530
-@@ -6,6 +6,6 @@
- Terminal=false
- Type=Application
- StartupNotify=false
--Icon=io.gitlab.zehkira.Monophony
-+Icon=snap.monophony.io.gitlab.zehkira.Monophony
- Categories=AudioVideo;Audio;Music;
- X-Purism-FormFactor=Workstation;Mobile;
-diff -Naur a/source/Makefile b/source/Makefile
---- a/source/Makefile	2023-08-14 23:11:04.268980370 +0530
-+++ b/source/Makefile	2023-07-07 20:23:45.603286362 +0530
-@@ -13,6 +13,7 @@
- 	--follow-import-to=monophony \
- 	--follow-import-to=mpris_server \
- 	--follow-import-to=gi \
-+	--static-libpython=no \
- 	-o monophony.bin
- 
- 
+diff --git a/source/monophony/__init__.py b/source/monophony/__init__.py
+index 4a51289..a07bf0b 100644
+--- a/source/monophony/__init__.py
++++ b/source/monophony/__init__.py
+@@ -1,2 +1,3 @@
+ __version__ = '2.6.0'
+-APP_ID = 'io.gitlab.zehkira.Monophony'
++APP_ID = 'io.gitlab.zehkira.Monophony' if not os.getenv('SNAP') else
++'monophony_monophony'
