@@ -65,10 +65,10 @@ parts:
     override-pull: |
       craftctl default
       patch -p1 < ${CRAFT_PROJECT_DIR}/monophony.patch
-      pip install nuitka==1.9.5 ordered-set==4.1.0
-      export PATH=$HOME/.local/bin:$PATH
       sed -i 's|https://gitlab.com/zehkira/monophony/-/issues|https://github.com/soumyaDghosh/monophony-snap/issues|' ${CRAFT_PART_SRC_WORK}/monophony/frontend/windows/main_window.py
     override-build: |
+      pip install nuitka==1.9.5 ordered-set==4.1.0
+      export PATH=$HOME/.local/bin:$PATH
       craftctl default
       sed -i 's|Icon=io.gitlab.zehkira.Monophony|Icon=${SNAP}/share/icons/hicolor/scalable/apps/io.gitlab.zehkira.Monophony.svg|' ${CRAFT_PART_INSTALL}/share/applications/io.gitlab.zehkira.Monophony.desktop
     parse-info: [share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
