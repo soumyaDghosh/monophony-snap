@@ -24,6 +24,9 @@ slots:
     interface: dbus
     bus: session
     name: io.gitlab.zehkira.Monophony
+  mpris:
+    interface: mpris
+    name: Monophony
 
 parts:
   libexpat:
@@ -159,5 +162,3 @@ apps:
     plugs:
       - network
       - audio-playback
-    slots:
-      - mpris
