@@ -123,7 +123,7 @@ parts:
       - mpris-server==0.4.2
       - ytmusicapi==1.4.2
       - yt-dlp==2023.12.30
-    prime:
+    stage:
       - -bin/activate
       - -bin/activate.csh
       - -bin/activate.fish
