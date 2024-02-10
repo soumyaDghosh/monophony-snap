@@ -1,0 +1,56 @@
+diff --git a/source/monophony/backend/mpris.py b/source/monophony/backend/mpris.py
+index d9bb18d..acc6f4f 100644
+--- a/source/monophony/backend/mpris.py
++++ b/source/monophony/backend/mpris.py
+@@ -24,6 +24,14 @@ class Adapter(MprisAdapter):
+ 	def can_quit(self) -> bool:
+ 		return False
+ 
++	def can_raise(self) -> bool:
++    	return True;
++
++	def set_raise(self, value: bool):
++	    if value:
++    	    self.monophony_player.raise()
++
++
+ 	def quit(self):
+ 		pass
+ 
+diff --git a/source/monophony/backend/player.py b/source/monophony/backend/player.py
+index 9372061..4b21fe3 100644
+--- a/source/monophony/backend/player.py
++++ b/source/monophony/backend/player.py
+@@ -36,6 +36,7 @@ class Player:
+ 			monophony.backend.settings.get_value('mode', PlaybackMode.NORMAL)
+ 		)
+ 		self.mpris_adapter = None
++		self.mpris_raise_callback = None
+ 		self.mpris_server = None
+ 		self.playbin = Gst.ElementFactory.make('playbin', 'playbin')
+ 		self.playbin.set_state(Gst.State.READY)
+@@ -437,3 +438,6 @@ class Player:
+ 			)
+ 
+ 		self.lock.unlock()
++    def raise(self):
++		if (self.mpris_raise_callback):
++      		self.mpris_raise_callback()
+diff --git a/source/monophony/frontend/windows/main_window.py b/source/monophony/frontend/windows/main_window.py
+index 09004a5..a2ee1f5 100644
+--- a/source/monophony/frontend/windows/main_window.py
++++ b/source/monophony/frontend/windows/main_window.py
+@@ -92,6 +92,7 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
+ 		)
+ 		self.get_application().set_accels_for_action('focus-search', ['<Control>f'])
+ 		self.connect('close-request', MonophonyMainWindow._on_quit)
++		self.player.mpris_raise_callback = self.raise
+ 
+ 	def append_page(self, widget: Gtk.Widget):
+ 		while child := self.stack.get_adjacent_child(Adw.NavigationDirection.FORWARD):
+@@ -205,3 +206,5 @@ class MonophonyMainWindow(Adw.ApplicationWindow):
+ 	def _on_save_playlist(self, name: str, contents: list):
+ 		monophony.backend.playlists.add_playlist(name, contents)
+ 		self.toaster.add_toast(Adw.Toast.new(_('Added')))
++	def raise(self):
++		self.present()
