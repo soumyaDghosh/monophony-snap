@@ -74,7 +74,7 @@ parts:
       - prefix=${CRAFT_PART_INSTALL}
     override-pull: |
       craftctl default
-      sed -i s#return APP_ID#return 'monophony_monophony'# ${CRAFT_PART_SRC_WORK}/monophony/backend/mpris.py
+      sed -i "s#return APP_ID#return 'monophony_monophony'#" ${CRAFT_PART_SRC_WORK}/monophony/backend/mpris.py
       sed -i 's|https://gitlab.com/zehkira/monophony/-/issues|https://github.com/soumyaDghosh/monophony-snap/issues|' ${CRAFT_PART_SRC_WORK}/monophony/frontend/windows/main_window.py
     override-build: |
       craftctl default
