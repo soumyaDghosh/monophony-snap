@@ -44,7 +44,7 @@ index 09004a5..a2ee1f5 100644
  		)
  		self.get_application().set_accels_for_action('focus-search', ['<Control>f'])
  		self.connect('close-request', MonophonyMainWindow._on_quit)
-+		self.player.mpris_raise_callback = self.raise
++		self.player.mpris_raise_callback = self.raise;
  
  	def append_page(self, widget: Gtk.Widget):
  		while child := self.stack.get_adjacent_child(Adw.NavigationDirection.FORWARD):
