@@ -74,6 +74,7 @@ parts:
       - prefix=${CRAFT_PART_INSTALL}
     override-pull: |
       craftctl default
+      patch -p1 < ${CRAFT_PROJECT_DIR}/monophony.patch
       sed -i 's|https://gitlab.com/zehkira/monophony/-/issues|https://github.com/soumyaDghosh/monophony-snap/issues|' ${CRAFT_PART_SRC_WORK}/monophony/frontend/windows/main_window.py
     override-build: |
       craftctl default
