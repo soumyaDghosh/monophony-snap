@@ -31,7 +31,7 @@ slots:
 parts:
   libexpat:
     source: https://github.com/libexpat/libexpat.git
-    source-tag: 'R_2_6_0'
+    source-tag: 'R_2_6_1'
 # ext:updatesnap
 #   version-format:
 #     format: "R_%M_%m_%R"
