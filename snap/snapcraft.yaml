@@ -65,7 +65,7 @@ parts:
     plugin: make
     source: https://gitlab.com/zehkira/monophony.git
     source-subdir: source
-    source-tag: 'v2.6.1'
+    source-tag: 'v2.7.0'
     source-depth: 1
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
