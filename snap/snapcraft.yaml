@@ -34,8 +34,7 @@ parts:
     source-tag: 'R_2_6_0'
 # ext:updatesnap
 #   version-format:
-#     format: "R_%M_%m_%R"
-#     lower-than: 'R_2_6_1'
+#     ignore: true
     source-subdir: expat
     source-depth: 1
     plugin: autotools
