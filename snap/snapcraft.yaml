@@ -162,3 +162,4 @@ apps:
       - network
       - audio-playback
       - network-status
+      - screen-inhibit-control
