@@ -52,35 +52,28 @@ parts:
       - --prefix=/usr
     override-prime: ''
 
-  nuitka:
-    source: .
-    plugin: python
-    python-packages:
-      - Nuitka==1.9.7
-    override-prime: ''
-
   monophony:
-    after: [ libexpat, zlib, runtime-python-dependencies, nuitka ]
+    after: [ libexpat, zlib ]
     # See 'snapcraft plugins'
-    plugin: make
+    plugin: python
     source: https://gitlab.com/zehkira/monophony.git
     source-subdir: source
     source-tag: 'v2.11.0'
     source-depth: 1
     build-environment:
       - PATH: ${CRAFT_STAGE}/bin:${PATH}
-      - PYTHONPATH: ${CRAFT_STAGE}/lib/python3.10/site-packages:${PYTHONPATH}
-    make-parameters:
-      - prefix=${CRAFT_PART_INSTALL}
+      - PYTHONPATH: ${CRAFT_STAGE}/lib/python3.10/site-packages:/usr/lib/python3/dist-packages/
     override-pull: |
       craftctl default
+      sed -i "/pip install/d" ${CRAFT_PART_SRC_WORK}/Makefile
+      sed -i "s|3.11|3.10|" ${CRAFT_PART_SRC_WORK}/pyproject.toml
       sed -i 's|https://gitlab.com/zehkira/monophony/-/issues|https://github.com/soumyaDghosh/monophony-snap/issues|' ${CRAFT_PART_SRC_WORK}/monophony/frontend/windows/main_window.py
     override-build: |
       craftctl default
-      sed -i 's|Icon=io.gitlab.zehkira.Monophony|Icon=${SNAP}/share/icons/hicolor/scalable/apps/io.gitlab.zehkira.Monophony.svg|' ${CRAFT_PART_INSTALL}/share/applications/io.gitlab.zehkira.Monophony.desktop
-    parse-info: [share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
-    organize:
-      usr: .
+      cd ${CRAFT_PART_SRC_WORK}
+      make prefix=${CRAFT_PART_INSTALL}/usr install
+      mv bin/yt-dlp $CRAFT_PART_INSTALL/usr/bin
+    parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
 
   deps:
     plugin: nil
@@ -88,75 +81,35 @@ parts:
       - gir1.2-gstreamer-1.0
       - gir1.2-gst-plugins-base-1.0
     prime:
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstAllocators-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstApp-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstAudio-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstGL-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstGLEGL-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstGLWayland-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstGLX11-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstPbutils-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstRtp-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstRtsp-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstSdp-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstTag-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstVideo-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/Gst-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstBase-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstCheck-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstController-1.0.typelib
-      - lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstNet-1.0.typelib
-    organize:
-      usr: .
-
-  runtime-python-dependencies:
-    source: .
-# ext:updatesnap
-#   version-format:
-#     ignore: true
-    plugin: python
-    build-environment:
-      # WORKAROUND: The python plugin is broken with gnome extension
-      - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
-      - PYTHONPATH: ""
-    python-packages:
-      - mpris-server==0.4.2
-      - ytmusicapi==1.4.2
-      - yt-dlp==2023.12.30
-    stage:
-      - -bin/activate
-      - -bin/activate.csh
-      - -bin/activate.fish
-      - -bin/Activate.ps1
-      - -bin/python
-      - -bin/python3
-      - -bin/python3.10
-      - -bin/pip
-      - -bin/pip3
-      - -bin/pip3.10
-      - -pyvenv.cfg
-      - -lib/python3.10/site-packages/gi
-      - -lib/python3.10/site-packages/pygtkcompat
-      - -lib/python3.10/site-packages/PyG*
-      - -lib/python3.10/site-packages/pycairo*
-      - -lib/python3.10/site-packages/cairo*
-      - -lib/*/*/setup*
-      - -lib/*/*/pkg*
-      - -lib/*/*/pip*
-      - -lib/*/*/_dist*
-      - -share
-      - -include
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstAllocators-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstApp-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstAudio-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstGL-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstGLEGL-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstGLWayland-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstGLX11-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstPbutils-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstRtp-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstRtsp-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstSdp-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstTag-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstVideo-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/Gst-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstBase-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstCheck-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstController-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstNet-1.0.typelib
 
 apps:
   monophony:
-    command: bin/monophony
-    desktop: share/applications/io.gitlab.zehkira.Monophony.desktop
+    command: usr/bin/monophony
+    desktop: usr/share/applications/io.gitlab.zehkira.Monophony.desktop
     extensions: [gnome]
     common-id: io.gitlab.zehkira.Monophony
     environment:
       PATH: $SNAP/ffmpeg-platform/usr/bin:$PATH
-      PYTHONPATH: $SNAP/lib/python3.10/site-packages:$PYTHONPATH
-      GI_TYPELIB_PATH: ${SNAP}/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
+      PYTHONPATH: $SNAP/usr/lib/python3.10/site-packages:$PYTHONPATH
+      GI_TYPELIB_PATH: ${SNAP}/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
       LD_LIBRARY_PATH: $SNAP/ffmpeg-platform/usr/lib/$CRAFT_ARCH_TRIPLET:$LD_LIBRARY_PATH
     plugs:
       - network
