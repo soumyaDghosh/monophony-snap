@@ -64,6 +64,7 @@ parts:
       - yt-dlp==2024.07.02
     override-pull: |
       craftctl default
+      sed -i "s|'share/locale'|'usr/share/locale'|" ${CRAFT_PART_SRC_WORK}/bin/monophony.py
       sed -i "/pip install/d" ${CRAFT_PART_SRC_WORK}/Makefile
       sed -i "s|3.11|3.10|" ${CRAFT_PART_SRC_WORK}/pyproject.toml
       sed -i 's|https://gitlab.com/zehkira/monophony/-/issues|https://github.com/soumyaDghosh/monophony-snap/issues|' ${CRAFT_PART_SRC_WORK}/monophony/frontend/windows/main_window.py
