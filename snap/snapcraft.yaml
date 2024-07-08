@@ -73,6 +73,19 @@ parts:
       cd ${CRAFT_PART_SRC_WORK}
       make prefix=${CRAFT_PART_INSTALL}/usr install
     parse-info: [usr/share/metainfo/io.gitlab.zehkira.Monophony.metainfo.xml]
+    organize:
+      bin: usr/bin
+      lib/python3.10/site-packages: usr/lib/python3/dist-packages
+    prime:
+      - -share
+      - -lib64
+      - -include
+      - -lib
+      - -usr/bin/pip*
+      - -usr/bin/Activate*
+      - -usr/bin/activate*
+      - -usr/bin/python*
+      - -pyvenv.cfg
 
   deps:
     plugin: nil
@@ -107,7 +120,7 @@ apps:
     common-id: io.gitlab.zehkira.Monophony
     environment:
       PATH: $SNAP/ffmpeg-platform/usr/bin:$PATH
-      PYTHONPATH: $SNAP/usr/lib/python3.10/site-packages:$PYTHONPATH
+      PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
       GI_TYPELIB_PATH: ${SNAP}/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
       LD_LIBRARY_PATH: $SNAP/ffmpeg-platform/usr/lib/$CRAFT_ARCH_TRIPLET:$LD_LIBRARY_PATH
     plugs:
