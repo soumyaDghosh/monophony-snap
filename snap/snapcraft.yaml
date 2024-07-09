@@ -92,25 +92,34 @@ parts:
     stage-packages:
       - gir1.2-gstreamer-1.0
       - gir1.2-gst-plugins-base-1.0
+      - gir1.2-gst-plugins-bad-1.0
     prime:
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstAllocators-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstApp-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstAudio-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstGL-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstGLEGL-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstGLWayland-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstGLX11-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstPbutils-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstRtp-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstRtsp-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstSdp-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstTag-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstVideo-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/Gst-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstBase-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstCheck-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstController-1.0.typelib
-      - usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0/GstNet-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstAllocators-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstApp-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstAudio-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstGL-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstGLEGL-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstGLWayland-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstGLX11-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstPbutils-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstRtp-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstRtsp-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstSdp-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstTag-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstVideo-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/Gst-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstBase-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstCheck-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstController-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstNet-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstBadAudio-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstCodecs-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstInsertBin-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstMpegts-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstPlay-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstPlayer-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstTranscoder-1.0.typelib
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0/GstWebRTC-1.0.typelib
 
 apps:
   monophony:
@@ -121,8 +130,7 @@ apps:
     environment:
       PATH: $SNAP/ffmpeg-platform/usr/bin:$PATH
       PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
-      GI_TYPELIB_PATH: ${SNAP}/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
-      LD_LIBRARY_PATH: $SNAP/ffmpeg-platform/usr/lib/$CRAFT_ARCH_TRIPLET:$LD_LIBRARY_PATH
+      LD_LIBRARY_PATH: $SNAP/ffmpeg-platform/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$LD_LIBRARY_PATH
     plugs:
       - network
       - audio-playback
