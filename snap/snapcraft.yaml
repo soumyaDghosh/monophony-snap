@@ -1,5 +1,5 @@
 name: monophony
-base: core22 
+base: core24
 adopt-info: monophony
 grade: stable 
 confinement: strict 
@@ -8,16 +8,16 @@ source-code: https://gitlab.com/zehkira/monophony
 website: https://github.com/soumyaDghosh/monophony-snap
 issues: https://github.com/soumyaDghosh/monophony-snap/issues
 
-architectures:
-  - build-on: amd64
-  - build-on: arm64
-  - build-on: armhf
+platforms:
+  amd64: 
+  arm64: 
+  armhf: 
 
 plugs:
-  ffmpeg-2204:
+  ffmpeg-2404:
     interface: content
     target: ffmpeg-platform
-    default-provider: ffmpeg-2204
+    default-provider: ffmpeg-2404
 
 slots:
   monophony:
