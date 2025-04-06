@@ -58,7 +58,7 @@ parts:
     plugin: python
     source: https://gitlab.com/zehkira/monophony.git
     source-subdir: source
-    source-tag: 'v3.2.0'
+    source-tag: 'v3.3.0'
     source-depth: 1
     python-packages:
       - yt-dlp==2025.03.25
